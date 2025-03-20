@@ -34,3 +34,14 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Flow
+1. You input the job description and your experiences
+2. The model will return you common interview questions as well as prospective answers for you to give in STARR format based on your experiences
+3. You can then have a conversation about the questions, responses, and get clarification or change your practice interview plan
+
+## TODO
+- style chat box
+- create user chat functionality
+- create info page about STARR method
+- more styling on page(interactivity)

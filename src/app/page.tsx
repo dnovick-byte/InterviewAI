@@ -1,8 +1,9 @@
-import Image from "next/image";
 import { PrepForm } from "./components/prep-form";
 import styles from "./page.module.css";
+import { create } from "domain";
 
 export default function Home() {
+
   return (
     <div className={styles.page}>
       <h1 className={styles.title}> AI Interview Prep Assistant </h1>
