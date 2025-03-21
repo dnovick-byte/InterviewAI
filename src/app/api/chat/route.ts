@@ -47,7 +47,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     let responseText = '';
     if (result && result.response) {
-      responseText = result.response.text();
+      responseText = await result.response.text();
       // Clean JSON if needed
       responseText = cleanJson(responseText);
     }
