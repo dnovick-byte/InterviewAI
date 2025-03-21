@@ -1,4 +1,5 @@
 // app/api/createChatSession/route.ts
+import { chatSessions } from '../chatSessions';
 import { NextResponse } from 'next/server';
 const {
   GoogleGenerativeAI,
@@ -7,8 +8,6 @@ const {
   HarmBlockThreshold,
 } = require("@google/generative-ai");
 
-// In-memory storage for chat sessions (use a database in production)
-const chatSessions = new Map();
 
 export async function GET() {
   try {
@@ -57,6 +56,3 @@ export async function GET() {
     );
   }
 }
-
-// We need to export this map so it can be accessed by the chat API route
-export { chatSessions };

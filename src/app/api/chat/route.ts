@@ -1,6 +1,6 @@
 // app/api/chat/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { chatSessions } from '../create/route';
+import { chatSessions } from '../chatSessions';
 
 const cleanJson = (text: string): string => {
   return text.replace(/^```json\s*|```\s*$/g, '');
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         { status: 404 }
       );
     }
-    
+
     // Send the message to the existing chat session
     const result = await chatSession.sendMessage(message);
 
