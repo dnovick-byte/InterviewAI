@@ -1,11 +1,46 @@
-import style from "./Chat.module.css"
-import { ChatMessage, ChatProps } from './d'
+import style from "./chat.module.css";
+import { useState, useEffect, useRef } from "react";
+import { ChatMessage } from '../page';
+import { ArrowUpFromDot } from 'lucide-react';
 
 
-export const Chat: React.FC<ChatProps> = ({ chats }) => {
+export interface ChatProps {
+    chats: ChatMessage[];
+    setChats: React.Dispatch<React.SetStateAction<ChatMessage[]>>;
+    setNewMsg: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export const Chat: React.FC<ChatProps> = ({ chats, setChats, setNewMsg }) => {
+    const [msg, setMsg] = useState("");
+
+    // Create a ref to the chat container that holds the messages
+    const chatContainerRef = useRef<HTMLDivElement | null>(null);
+
+    // Function to scroll the chat container to the bottom
+    const scrollToBottom = () => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    };
+    const handleChat = (e: React.FormEvent) => {
+        e.preventDefault();  // Prevent page refresh on form submit
+
+        setNewMsg(msg);
+        setMsg("");
+    }
+     
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMsg(e.target.value);
+    }
+    // Use the effect to scroll to the bottom whenever chats are updated
+    useEffect(() => {
+        scrollToBottom();
+    }, [chats]); // This will run every time the chats array changes
+
+
     return (
         <div className={style.chatContainer}>
-            <div className={style.activeChat}>
+            <div className={style.activeChat} ref={chatContainerRef}>
                 {chats.map((chat, index) => {
                     if (index === 0 && chat.role === "assistant") {
                         try {
@@ -25,10 +60,9 @@ export const Chat: React.FC<ChatProps> = ({ chats }) => {
                                 </div>
                             );
                         } catch (error) {
-                            console.error("Invalid JSON format:", error);
                             return (
                                 <div key={index} className={style.assistantMessage}>
-                                    Error parsing response
+                                    Error developing interview questions and STARR responses
                                 </div>
                             );
                         }
@@ -41,12 +75,20 @@ export const Chat: React.FC<ChatProps> = ({ chats }) => {
                     }
                 })}
             </div> 
-                <form className={style.chatBox}>
-                    <input type="text" placeholder="enter query"></input>
-                </form>
+
+            <form className={style.chatBox} onSubmit={handleChat}>
+                <input 
+                    type="text" 
+                    placeholder="Ask questions or clarifications..." 
+                    value={msg}
+                    onChange={handleInputChange} // Update state on input change
+                    className={style.textIn}
+                />
+
+                <button type="submit" className={style.btn}>
+                    <ArrowUpFromDot />
+                </button>
+            </form>
         </div>
-
-
-
     );
 }
