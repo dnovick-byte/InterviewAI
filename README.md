@@ -1,47 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# InterviewAI
+This app is designed to help users prepare for job interviews by providing personalized interview questions and STARR-formatted responses. Users can input a job description and their experiences, and the app will interact with the Gemini API to generate common interview questions along with structured answers. You can then engage in a conversation with the model to refine your responses, simulating a real interview environment and improving your readiness for the big day.
 
-## Getting Started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Setup Instructions
+1. Clone the repository:
 ```
+git clone https://github.com/dnovick-byte/InterviewAI.git
+```
+2. Navigate to the project directory:
+```
+cd your-project
+```
+3. Install dependencies: You need to have Node.js installed.  
+Run the following command to install the required dependencies:
+```
+npm install
+```
+4. Set up environment variables: This project requires a Google Gemini API key for external services. To set it up:
+- Create a ```.env.local``` file in the root of the project
+- Add your API key to the ```.env.local``` file in the following format:
+```
+export GEMINI_API_KEY=your-api-key
+```
+5. Run the development server: Start the server in development mode with
+```
+npm run dev
+```
+Now open your browser and visit [http://localhost:3000]()
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features Implemented
+- **Job Description and Experience Input:** Users can input a job description and their relevant experiences into the app.
+- **API Integration with Gemini API:** The application then sends the job description and experiences to the Gemini API, which processes the information and returns a set of common interview questions, as well as STARR-formatted responses (Situation, Task, Action, Result, Relate) for each question.
+- **Conversational Interface with Model:** After receiving the interview questions and responses, users can engage in a conversation with the model. This allows for further refinement and practice of answers, simulating a real interview environment.
+- **STAR Response Format:** The system automatically formats the responses in the STARR method, ensuring the user can provide structured, coherent, and detailed answers.
+- Real-time Interaction: Users can ask the model follow-up questions or request clarification on certain responses, enabling a dynamic and interactive practice session.
+- **Customizable Experience:** The user can adjust and refine their responses based on feedback from the model or modify the context to focus on specific aspects of the interview.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Libraries and Tools Used
+- Next.js: A React framework that enables server-side rendering, static site generation, and more.  
+- React: JavaScript library for building user interfaces.
+- Axios: Promise-based HTTP client for making API requests.
+- CSS Modules: For scoped styling in React components.
+- Lucide React: A set of customizable, lightweight icons for React that you can easily use in your project.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Known Issues or Limitations
+- **No Database Integration:** The application currently does not use a database, meaning user data cannot be stored persistently. Therefore, users cannot log in or save their previous interactions or responses for future sessions.
+- **Page Refresh Resets Chat:** When the page is refreshed, the chat history is lost, and any ongoing conversation with the model is reset. The application does not yet save the state or conversation, leading to a poor user experience during page reloads.
+- **Limited Authentication:** The application lacks a robust authentication system, so there is no way to create and manage user accounts or securely store user data over time.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## Flow
-1. You input the job description and your experiences
-2. The model will return you common interview questions as well as prospective answers for you to give in STARR format based on your experiences
-3. You can then have a conversation about the questions, responses, and get clarification or change your practice interview plan
-
-## TODO
-- style chat box
-- create user chat functionality
-- create info page about STARR method
-- more styling on page(interactivity)
+## Future Improvements
+- **Database Integration:** Implement a database to store user data, chat history, and other relevant information. This would allow users to log in, save their responses, and retrieve previous conversations.
+- **Persistent Chat History:** Improve the user experience by saving chat history locally or server-side, so users can continue conversations even after refreshing the page or logging in from another device.
+- **User Authentication:** Add a user authentication system to allow users to create accounts, log in, and securely access their personalized data and saved interactions.
+- **Error Handling & Feedback:** Improve error handling by providing users with more meaningful feedback when something goes wrong, such as displaying error messages for failed API calls or incomplete inputs.
+- **Create an Information Page for STARR Method:** Add a dedicated page to explain the STAR (Situation, Task, Action, Result, Relate) method for answering interview questions.

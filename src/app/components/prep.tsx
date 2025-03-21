@@ -3,29 +3,13 @@ import style from "./prep.module.css";
 import { ChatMessage } from '../page'
 
 interface PrepProps {
-    setChats: React.Dispatch<React.SetStateAction<ChatMessage[]>>; // Type for the setter function
-    setNewMsg: React.Dispatch<React.SetStateAction<string>>;
+    setNewMsg: React.Dispatch<React.SetStateAction<string>>; // to set new message to send to model
 }
 
-export const Prep: React.FC<PrepProps> = ({ setChats, setNewMsg }) => {
-    const [jobDescription, setJobDescription] =  useState("")
-    const [experiences, setExperiences] = useState("")
-    const [isLoading, setIsLoading] = useState(false)
-/*
-    
-
-
-    const handleInitial = async (e: React.FormEvent) => {
-        e.preventDefault();  // Prevent page refresh on form submit
-
-        //give input to api for output
-        // create apis in api folder, one for initializing chat, one for sending chat (when you send you receive as well)
-        //const session = createChatSession()
-        
- 
-    };
-   */
-
+export const Prep: React.FC<PrepProps> = ({ setNewMsg }) => {
+    const [jobDescription, setJobDescription] =  useState(""); // job description to send to model
+    const [experiences, setExperiences] = useState(""); // experiences to send to model
+    const [isLoading, setIsLoading] = useState(false);
     
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -38,7 +22,6 @@ export const Prep: React.FC<PrepProps> = ({ setChats, setNewMsg }) => {
             // Display an error message for empty fields
             document.getElementById("name-error")!.style.display = "block"; // Show error message
         } else {
-
             setNewMsg(`Job Description: ${jobDescription}\nExperiences: ${experiences}`);
         }
     }

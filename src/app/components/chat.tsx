@@ -5,13 +5,12 @@ import { ArrowUpFromDot } from 'lucide-react';
 
 
 export interface ChatProps {
-    chats: ChatMessage[];
-    setChats: React.Dispatch<React.SetStateAction<ChatMessage[]>>;
-    setNewMsg: React.Dispatch<React.SetStateAction<string>>;
+    chats: ChatMessage[]; // to display chats
+    setNewMsg: React.Dispatch<React.SetStateAction<string>>; // to set new message to send in chat
 }
 
-export const Chat: React.FC<ChatProps> = ({ chats, setChats, setNewMsg }) => {
-    const [msg, setMsg] = useState("");
+export const Chat: React.FC<ChatProps> = ({ chats, setNewMsg }) => {
+    const [msg, setMsg] = useState(""); // message state for text input
 
     // Create a ref to the chat container that holds the messages
     const chatContainerRef = useRef<HTMLDivElement | null>(null);
@@ -22,20 +21,22 @@ export const Chat: React.FC<ChatProps> = ({ chats, setChats, setNewMsg }) => {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }
     };
-    const handleChat = (e: React.FormEvent) => {
-        e.preventDefault();  // Prevent page refresh on form submit
-
-        setNewMsg(msg);
-        setMsg("");
-    }
-     
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setMsg(e.target.value);
-    }
     // Use the effect to scroll to the bottom whenever chats are updated
     useEffect(() => {
         scrollToBottom();
     }, [chats]); // This will run every time the chats array changes
+
+    // when chat form os submitted, setNewMsg() is set with the new message which changes state in parent component, which calls the API route
+    const handleChat = (e: React.FormEvent) => {
+        e.preventDefault();  // Prevent page refresh on form submit
+        setNewMsg(msg);
+        setMsg(""); // set input text message back to ""
+    }
+     
+    // handle input change in textbox
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMsg(e.target.value);
+    }
 
 
     return (

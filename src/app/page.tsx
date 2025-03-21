@@ -4,9 +4,8 @@ import styles from "./page.module.css";
 import { create } from "domain";
 import { Chat } from "./components/chat";
 import { Prep } from "./components/prep";
-import { createChatSession } from "./api/gemini";
 import { Header } from "./components/header";
-
+import axios from 'axios';
 
 export interface ChatMessage {
   role: 'user' | 'assistant';
@@ -14,42 +13,60 @@ export interface ChatMessage {
 }
 
 export default function Home() {
-  const [chats, setChats] = useState<ChatMessage[]>([]);
-  const [newMsg, setNewMsg] = useState("");
+  const [chats, setChats] = useState<ChatMessage[]>([]); // history of messages in conversation
+  const [newMsg, setNewMsg] = useState(""); // new message state, passed down to child components
+  const [session, setSession] = useState(null); // session id for API calls
 
 
-  const session = createChatSession();
-
-  const cleanJson = (text: String) => {
-    return(text.replace(/^```json\s*|```\s*$/g, ''));
-  }
-  const checkJson = (text: String) => {
-   
-  }
-
+  // Initialize chat session on first load
   useEffect(() => {
-
-    console.log(newMsg)
-    const send = async () => {
-      if (chats.length > 0) { // do not set initial input as chat
-        setChats((prev) => [...prev, { role: 'user', content: newMsg}]);
-      }
-      const result = await session.sendMessage(newMsg);
-      if (result && result.response) {
-          const responseText = result.response.text();  // Extract text properly
-          console.log(responseText);
-          const cleaned = cleanJson(responseText);
-          console.log(cleaned);
-
-          setChats((prev) => [...prev, { role: 'assistant', content: cleaned }]);
+    const initChatSession = async () => {
+      try {
+        const response = await axios.get('/api/create'); //call create API route to create session
+        
+        if (response.data.success && response.data.session) {
+          setSession(response.data.session);
+          console.log('Chat session created:', response.data.session);
+        } else {
+          console.error('Failed to create chat session');
         }
-    }
+      } catch (error) {
+        console.error('Error initializing chat session:', error);
+      }
+    };
+    
+    initChatSession();
+  }, []);
 
-
+  // when newMsg changes (from child component) it is sent to model
+  useEffect(() => {
     if (newMsg !== "") { // prevents empty responses
-      send();
+      sendMessage(newMsg);
     }
   }, [newMsg]);
+
+
+  // function to send message to model and get response
+  const sendMessage = async (message: string) => {
+    if (!message || !session) return;
+    //setIsLoading(true);
+    try {
+      // Add user message to chat
+      if (chats.length > 0) { // do not set initial input as user chat
+        setChats((prev) => [...prev, { role: 'user', content: message }]);
+      }
+      
+      const response = await axios.post('/api/chat', { //call chat API route to send chat and receive chat
+        message,
+        session
+      });
+  
+      // Add assistant response to chat
+      setChats((prev) => [...prev, { role: 'assistant', content: response.data.content }]);
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  };
 
 
 
@@ -58,12 +75,11 @@ export default function Home() {
 
       <Header />
 
-      
       <div className={styles.container}>
         {chats.length > 0 ?
-          <Chat chats={chats} setChats={setChats} setNewMsg={setNewMsg}/>    
+          <Chat chats={chats} setNewMsg={setNewMsg}/>    
           :
-          <Prep setChats={setChats} setNewMsg={setNewMsg}/>
+          <Prep setNewMsg={setNewMsg}/>
         }
       </div>
 
