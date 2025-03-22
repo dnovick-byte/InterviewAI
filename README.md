@@ -56,4 +56,4 @@ Now open your browser and visit http://localhost:3000
 - **Create an Information Page for STARR Method:** Add a dedicated page to explain the STAR (Situation, Task, Action, Result, Relate) method for answering interview questions.
 
 ## Demo
-(Check out the live app!)[https://interview-ai-git-main-daniel-novicks-projects.vercel.app/]
+[Check out the live app!](https://interview-ai-git-main-daniel-novicks-projects.vercel.app/)
