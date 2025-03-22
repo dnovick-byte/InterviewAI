@@ -26,7 +26,7 @@ export GEMINI_API_KEY=your-api-key
 ```
 npm run dev
 ```
-Now open your browser and visit [http://localhost:3000]()
+Now open your browser and visit http://localhost:3000
 
 ## Features Implemented
 - **Job Description and Experience Input:** Users can input a job description and their relevant experiences into the app.
@@ -48,10 +48,12 @@ Now open your browser and visit [http://localhost:3000]()
 - **Page Refresh Resets Chat:** When the page is refreshed, the chat history is lost, and any ongoing conversation with the model is reset. The application does not yet save the state or conversation, leading to a poor user experience during page reloads.
 - **Limited Authentication:** The application lacks a robust authentication system, so there is no way to create and manage user accounts or securely store user data over time.
 
-
 ## Future Improvements
 - **Database Integration:** Implement a database to store user data, chat history, and other relevant information. This would allow users to log in, save their responses, and retrieve previous conversations.
 - **Persistent Chat History:** Improve the user experience by saving chat history locally or server-side, so users can continue conversations even after refreshing the page or logging in from another device.
 - **User Authentication:** Add a user authentication system to allow users to create accounts, log in, and securely access their personalized data and saved interactions.
 - **Error Handling & Feedback:** Improve error handling by providing users with more meaningful feedback when something goes wrong, such as displaying error messages for failed API calls or incomplete inputs.
 - **Create an Information Page for STARR Method:** Add a dedicated page to explain the STAR (Situation, Task, Action, Result, Relate) method for answering interview questions.
+
+## Demo
+(Check out the live app!)[https://interview-ai-git-main-daniel-novicks-projects.vercel.app/]
